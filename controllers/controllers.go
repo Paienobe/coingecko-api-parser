@@ -8,10 +8,12 @@ import (
 
 	"github.com/Paienobe/coingecko-api/constants"
 	"github.com/Paienobe/coingecko-api/types"
+	"github.com/Paienobe/coingecko-api/utils"
 	"github.com/gorilla/mux"
 )
 
 func BitcoinChartHandler(w http.ResponseWriter, r *http.Request) {
+	utils.EnableCors(&w)
 	url := constants.BASE_URL + "/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily"
 	response, err := http.Get(url)
 	if err != nil {
@@ -32,6 +34,7 @@ func BitcoinChartHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func CoinsListHandler(w http.ResponseWriter, r *http.Request) {
+	utils.EnableCors(&w)
 	vars := mux.Vars(r)
 	pageNumber := vars["pageNumber"]
 
@@ -59,6 +62,7 @@ func CoinsListHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func SingleCoinHandler(w http.ResponseWriter, r *http.Request) {
+	utils.EnableCors(&w)
 	vars := mux.Vars(r)
 	coinID := vars["coinID"]
 
@@ -85,6 +89,7 @@ func SingleCoinHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GlobalMarketHandler(w http.ResponseWriter, r *http.Request) {
+	utils.EnableCors(&w)
 	url := constants.BASE_URL + "/global"
 	response, err := http.Get(url)
 	if err != nil {
