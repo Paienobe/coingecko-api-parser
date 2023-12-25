@@ -8,6 +8,7 @@ type AllMarketData struct {
 	ActiveCurrencies       int                  `json:"active_cryptocurrencies"`
 	Exchanges              int                  `json:"markets"`
 	TotalMarketCap         SupportedCurrencies  `json:"total_market_cap"`
+	TotalVolume            SupportedCurrencies  `json:"total_volume"`
 	MarketCapPercentages   MarketCapPercentages `json:"market_cap_percentage"`
 	MarketCapPercentage24h float64              `json:"market_cap_change_percentage_24h_usd"`
 }
