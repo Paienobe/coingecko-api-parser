@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/Paienobe/coingecko-api/constants"
 	"github.com/Paienobe/coingecko-api/types"
@@ -12,9 +13,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var CG_KEY = os.Getenv("COIN_GECKO_KEY")
+
 func BitcoinChartHandler(w http.ResponseWriter, r *http.Request) {
 	utils.EnableCors(&w)
-	url := constants.BASE_URL + "/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily"
+	url := fmt.Sprintf(constants.BASE_URL+"/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily&x_cg_demo_api_key=%s", CG_KEY)
 	response, err := http.Get(url)
 	if err != nil {
 		http.Error(w, "Error fetching data", http.StatusBadRequest)
@@ -38,7 +41,7 @@ func CoinsListHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	pageNumber := vars["pageNumber"]
 
-	url := fmt.Sprintf(constants.BASE_URL+"/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=%s&sparkline=true&price_change_percentage=1h%%2C24h%%2C7d", pageNumber)
+	url := fmt.Sprintf(constants.BASE_URL+"/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=%s&sparkline=true&price_change_percentage=1h%%2C24h%%2C7d&x_cg_demo_api_key=%s", pageNumber, CG_KEY)
 	// %% fixes invalid interpolation verb - it shows up as just one % sign
 
 	response, err := http.Get(url)
@@ -66,7 +69,7 @@ func SingleCoinHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	coinID := vars["coinID"]
 
-	url := fmt.Sprintf(constants.BASE_URL+"/coins/%s?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false", coinID)
+	url := fmt.Sprintf(constants.BASE_URL+"/coins/%s?localization=false&tickers=false&market_data=true&community_data=true&developer_data=false&sparkline=false&x_cg_demo_api_key=%s", coinID, CG_KEY)
 
 	response, err := http.Get(url)
 	if err != nil {
@@ -90,7 +93,7 @@ func SingleCoinHandler(w http.ResponseWriter, r *http.Request) {
 
 func GlobalMarketHandler(w http.ResponseWriter, r *http.Request) {
 	utils.EnableCors(&w)
-	url := constants.BASE_URL + "/global"
+	url := fmt.Sprintf(constants.BASE_URL+"/global?x_cg_demo_api_key=%s", CG_KEY)
 	response, err := http.Get(url)
 	if err != nil {
 		http.Error(w, "Error fetching data", http.StatusBadRequest)
