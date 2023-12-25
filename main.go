@@ -19,6 +19,7 @@ func main() {
 	router.HandleFunc("/bitcoin-charts", controllers.BitcoinChartHandler).Methods("GET")
 	router.HandleFunc("/coins-list/{pageNumber}", controllers.CoinsListHandler).Methods("GET")
 	router.HandleFunc("/coin/{coinID}", controllers.SingleCoinHandler).Methods("GET")
+	router.HandleFunc("/global", controllers.GlobalMarketHandler).Methods("GET")
 
 	fmt.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(portString, router))

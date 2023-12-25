@@ -83,3 +83,28 @@ func SingleCoinHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
+
+func GlobalMarketHandler(w http.ResponseWriter, r *http.Request) {
+	url := constants.BASE_URL + "/global"
+	response, err := http.Get(url)
+	if err != nil {
+		http.Error(w, "Error fetching data", http.StatusBadRequest)
+	}
+
+	responseBody, err := io.ReadAll(response.Body)
+	if err != nil {
+		fmt.Println("Error reading body", err)
+	}
+
+	var responseObject types.GlobalMarketData
+	json.Unmarshal(responseBody, &responseObject)
+
+	res, err := json.Marshal(responseObject)
+	if err != nil {
+		http.Error(w, "Error marshalling data", http.StatusBadRequest)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}

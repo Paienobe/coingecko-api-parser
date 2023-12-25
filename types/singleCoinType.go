@@ -34,7 +34,7 @@ type MarketData struct {
 
 type SupportedCurrencies struct {
 	Usd float64 `json:"usd"`
-	Gbp float64 `json:"gpb"`
+	Gbp float64 `json:"gbp"`
 	Eur float64 `json:"eur"`
 	Ngn float64 `json:"ngn"`
 }
