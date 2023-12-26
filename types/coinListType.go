@@ -3,6 +3,7 @@ package types
 type Coin struct {
 	ID               string    `json:"id"`
 	Name             string    `json:"name"`
+	Symbol           string    `json:"symbol"`
 	Image            string    `json:"image"`
 	CurrentPrice     float64   `json:"current_price"`
 	Rank             int       `json:"market_cap_rank"`
